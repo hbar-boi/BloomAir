@@ -1,5 +1,6 @@
 import time
 from peripherals import Sensor, Motor
+from thingspeak.api import send_data
 
 GPIO_DHT = 4
 
@@ -7,6 +8,7 @@ GPIO_MOTOR_2 = 22
 GPIO_MOTOR_1 = 27
 
 SAMPLE_PERIOD = 2  # seconds
+PUBLISH_PERIOD = 10 # seconds
 
 TEMP_THRESH = 26  # deg C
 HUMI_THRESH = 65  # %
@@ -28,6 +30,8 @@ class BloomAir:
 
     def run(self):
         loop = True
+        i = 0
+        publish_iter = PUBLISH_PERIOD // SAMPLE_PERIOD
         while loop:
             out = self.sensor.read()
             temp, humi = out['temp_c'], out['humidity']
@@ -39,7 +43,9 @@ class BloomAir:
             else:
                 if self.status is self.DEAD:
                     self.live()
-
+            if i == 0:
+                send_data(temp, humi)
+            i = (i+1) % publish_iter
             time.sleep(SAMPLE_PERIOD)
 
     def die(self):
