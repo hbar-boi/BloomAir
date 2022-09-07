@@ -3,8 +3,8 @@ import requests
 class IOT:
     def __init__(self):
         self.endpoint = "a38xyah013qn9m-ats.iot.eu-west-1.amazonaws.com"
-        self.cert = "/home/omkar/ethz/hackathon/BloomAir/aws/certs/linux_mock_thing.cert.pem"
-        self.key = "/home/omkar/ethz/hackathon/BloomAir/aws/certs/linux_mock_thing.private.key"
+        self.cert = "/home/pi/BloomAir/aws/certs/linux_mock_thing.cert.pem"
+        self.key = "/home/pi/BloomAir/aws/certs/linux_mock_thing.private.key"
         self.topic = "bloomair/test"
     
     def publish(self, message):
