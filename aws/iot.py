@@ -22,6 +22,3 @@ class IOT:
         print("Response status: ", str(publish.status_code))
         if publish.status_code == 200:
                 print("Response body:", publish.text)
-
-iot = IOT()
-iot.publish('{"temperature": 23.5, "humidity": 52.7}')

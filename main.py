@@ -1,5 +1,5 @@
 import time
-from peripherals import Sensor, Motor
+from raspi.peripherals import Sensor, Motor
 from thingspeak.api import send_data
 from aws.iot import IOT
 
@@ -34,7 +34,9 @@ class BloomAir:
         i = 0
         publish_iter = PUBLISH_PERIOD // SAMPLE_PERIOD
         while loop:
+            print('here', i)
             out = self.sensor.read()
+            print('out',out)
             temp, humi = out['temp_c'], out['humidity']
 
             print("Temperature: {} °C, humidity: {} %".format(temp, humi))
@@ -44,6 +46,7 @@ class BloomAir:
             else:
                 if self.status is self.DEAD:
                     self.live()
+            print(i,temp,humi)
             if i == 0:
                 send_data(temp, humi)
                 self.IOT.publish('{"temperature": {}, "humidity": {}}'.format(temp,humi))
