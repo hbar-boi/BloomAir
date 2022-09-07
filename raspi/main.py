@@ -1,6 +1,7 @@
 import time
 from peripherals import Sensor, Motor
 from thingspeak.api import send_data
+from aws.iot import IOT
 
 GPIO_DHT = 4
 
@@ -21,7 +22,7 @@ class BloomAir:
 
         self.sensor = Sensor({"dht": GPIO_DHT})
         self.motor = Motor([GPIO_MOTOR_1, GPIO_MOTOR_2])
-
+        self.IOT = IOT()
         self.reset()
 
     def reset(self):
@@ -45,6 +46,7 @@ class BloomAir:
                     self.live()
             if i == 0:
                 send_data(temp, humi)
+                self.IOT.publish('{"temperature": {}, "humidity": {}}'.format(temp,humi))
             i = (i+1) % publish_iter
             time.sleep(SAMPLE_PERIOD)
 
