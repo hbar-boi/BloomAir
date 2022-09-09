@@ -1,6 +1,5 @@
 from time import sleep
 import requests
-import numpy as np
 
 def send_data(temp, humidity):
     #headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
