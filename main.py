@@ -38,7 +38,7 @@ class BloomAir:
                 if self.status is self.DEAD:
                     self.live()
 
-            if i >= 5:
+            if i >= 1:
                 send_data(temp, humi)
                 self.IOT.publish(json.dumps(
                     {"temperature": temp, "humidity": humi}))
