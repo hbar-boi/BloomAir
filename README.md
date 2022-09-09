@@ -74,6 +74,8 @@ Old motor style (requires some tuning)![alt text](img/old.jpeg "Logo Title Text 
 
 Dashboard app![alt text](img/app.jpeg "Logo Title Text 1")
 
+Simulated sensor website ![alt text](img/website.jpeg "Logo Title Text 1")
+
 # Contributors
 - Andreas Regli - aregli@student.ethz.ch
 - Feichi Lu - feiclu@student.ethz.ch

@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd
 import time
 
-
+# train linear model
 df = pd.read_csv('test.csv')
 df_train = df.iloc[:100, :]
 df_test = df.iloc[100:, :]
@@ -22,6 +22,7 @@ lat_list = [47.372, 47.374]
 id_list = [1, 2]
 id_curr = 2
 
+# data generation
 for t in range(1000):
     time.sleep(1)
 
@@ -37,7 +38,7 @@ for t in range(1000):
         id = id_list[i]
         lon = lon_list[i]
         lat = lat_list[i]
-        p = np.random.choice([1,0], 1, p=[0.9, 0.1])[0]
+        p = np.random.choice([1,0], 1, p=[0.95, 0.05])[0]
         if p == 1:
             temp = np.random.uniform(60,90)
             humidity = reg.predict(np.array([[temp]]))[0][0] + np.random.uniform(-1,1)
