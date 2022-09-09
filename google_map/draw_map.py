@@ -49,8 +49,6 @@ clf.fit(X_train)
 
 
 
-
-
 df = pd.read_csv('df_test.csv')
 df_data = df[df['t'] == max(df['t'])]
 # print(df_data)
@@ -113,7 +111,7 @@ yaxis = LinearAxis()
 p3.add_layout(yaxis, 'left')
 
 
-grid = gridplot([[p1, p2], [p3, p4]], width=700, height=550)
+grid = gridplot([[p1, p2], [p3, p4]], width=500, height=400)
 io.curdoc().add_root(grid)
 
 def stream():
@@ -123,18 +121,11 @@ def stream():
     X_test = np.array(df_data[['temp', 'humidity']])
     y_pred_test = clf.predict(X_test)
     df_data.loc[(y_pred_test == -1), 'c_alert'] = '1'
-    # print(df_data)
-    
-    # anomaly_data = df_data.iloc[(y_pred_test == -1), :]
-    # alert_id = df_data.iloc[(y_pred_test == -1), :]['id']
-    # nomal_data = df_data.iloc[(y_pred_test == 1), :]
     source.data = dict(df_data)
     source1.data = dict(df_data.loc[(y_pred_test == -1), :])
     source2.data = dict(df_data.loc[(y_pred_test == 1), :])
 
-    # fac = df_data['c_alert'].unique()
     time.sleep(1)
 
 io.curdoc().add_periodic_callback(stream, 10)
-# io.show(p)
-# io.loop_until_closed()
+

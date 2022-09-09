@@ -45,9 +45,9 @@ Then activate the environment:
 For this part, we first do data simulation every 1 second, then we use `draw_map.py` to show real-time data changes as well as to do real-time anomaly detection.
 To run the data simulation, we do the following command:
 
-`python data_simulation.py`
+`python google_map/data_simulation.py`
 
-Then the data simulation would last for 1000 secends. We open another terminal to do google map visulization, remember to activate the environment first:
+Then the data simulation would last for 1000 secends. We open another terminal to do google map visulization, remember to activate the environment first and cd to google_map directory:
 
 `bokeh serve --show draw_map.py`
 
