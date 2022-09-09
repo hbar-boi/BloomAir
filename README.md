@@ -7,6 +7,29 @@ Based on data from neighboring BloomAir devices, users are notified of a possibl
 3. An analytics dashboard: We aggregate data from all BloomAir devices, and visualize it on Google Maps to provide a big picture view of indoor air quality trends.
 Also shown are any emerging anomalies in real time.
 
+## Features
+
+- appearance (3d print)
+    - flower
+    - stem tubes
+    - motor base
+    - other parts
+
+- peripherals
+    - motor
+    - sensor
+    - Raspberry Pi
+
+- cloud storage
+    - AWS storage
+    - thingspeak
+
+- management
+    - html dashboard
+    - google map display
+    - anomaly detection and alarm
+
+
 # Contributors
 - Andreas Regli - aregli@student.ethz.ch
 - Feichi Lu - feiclu@student.ethz.ch
