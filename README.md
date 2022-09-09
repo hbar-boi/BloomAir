@@ -9,25 +9,29 @@ Also shown are any emerging anomalies in real time.
 
 ## Features
 
-- appearance (3d print)
-    - flower
-    - stem tubes
-    - motor base
-    - other parts
+- Appearance (3D print)
+    - Flower
+    - Stem tubes
+    - Motor base
+    - Other parts
 
-- peripherals
-    - motor
-    - sensor
+- Peripherals
+    - Motor
+    - Sensor
     - Raspberry Pi
 
-- cloud storage
+- Cloud storage
     - AWS storage
-    - thingspeak
+    - ThingSpeak
 
-- management
-    - html dashboard
-    - google map display
-    - anomaly detection and alarm
+- Management
+    - HTML dashboard
+    - Google Maps display
+    - Anomaly detection and alarm
+    - Mobile application
+
+## Setup and technicals
+`pigpio` and `pigpio-dht` are required to communicate with motor and sensor, and can be installed via `pip`. Running `main.py` will take control of the mechanism and sensor while streaming the former's data to the ThingSpeak and AWS servers every ten seconds. Sensor polling will occur every 2 seconds. Script parameters can be altered to realize different configurations, and the straightforward sensor interface (in `raspi/peripherals.py`) allows for easy implementation of more complex sensing protocols. The servo motor can be configured for "analog" or "digital" output to obtain the optimal data visualization mode for the sensed quantities of interest. The control daemon `pigpiod` is run at startup via `/etc/rc.local`.
 
 
 # Contributors
