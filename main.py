@@ -2,6 +2,7 @@ import time
 from raspi.peripherals import Sensor, Motor
 from thingspeak.api import send_data
 from aws.iot import IOT
+import json
 
 GPIO_DHT = 4
 
@@ -49,7 +50,7 @@ class BloomAir:
             print(i,temp,humi)
             if i == 0:
                 send_data(temp, humi)
-                self.IOT.publish('{"temperature": {}, "humidity": {}}'.format(temp,humi))
+                self.IOT.publish(json.dumps({"temperature": temp, "humidity": humi}))
             i = (i+1) % publish_iter
             time.sleep(SAMPLE_PERIOD)
 

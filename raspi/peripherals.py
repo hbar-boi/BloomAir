@@ -22,30 +22,32 @@ class Sensor:
 
 class Motor:
     def __init__(self, gpios):
-        self.FORWARD, self.BACKWARD = True, False
+        self.FORWARD, self.BACKWARD = 0, 1
 
-        self.gpios = gpios
+        self.pwms = []
 
         GPIO.setmode(GPIO.BCM)
         for gpio in gpios:
             GPIO.setup(gpio, GPIO.OUT)
+            pwm = GPIO.PWM(gpio, 50)
+            pwm.start(0.0)
+            self.pwms.append(pwm)
 
         self.stop()
 
     def stop(self):
-        for gpio in self.gpios:
-            GPIO.output(gpio, False)
+        for pwm in self.pwms:
+            pwm.ChangeDutyCycle(0.0)
 
-    def move(self, direction, duration):
-        GPIO.output(self.gpios[0], direction)
-        GPIO.output(self.gpios[1], not direction)
+    def move(self, direction, speed, duration):
+        self.pwms[direction].ChangeDutyCycle(speed)
 
         if duration is not None:
             time.sleep(duration)
             self.stop()
 
-    def forward(self, duration=None):
-        self.move(self.FORWARD, duration)
+    def forward(self, speed=100.0, duration=None):
+        self.move(self.FORWARD, speed, duration)
 
-    def backward(self, duration=None):
-        self.move(self.BACKWARD, duration)
+    def backward(self, speed=100.0, duration=None):
+        self.move(self.BACKWARD, speed, duration)
