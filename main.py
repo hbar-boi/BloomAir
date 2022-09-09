@@ -10,7 +10,7 @@ GPIO_MOTOR = 13
 
 PUBLISH_PERIOD = 2  # seconds
 
-TEMP_THRESH = 30  # deg C
+TEMP_THRESH = 35  # deg C
 HUMI_THRESH = 65  # %
 
 

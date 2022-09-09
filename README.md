@@ -72,7 +72,7 @@ Original render ![alt text](img/render.jpeg "Logo Title Text 1")
 
 Old motor style (requires some tuning)![alt text](img/old.jpeg "Logo Title Text 1")
 
-Dashboard app ![alt text](img/app.jpeg "Logo Title Text 1")
+Dashboard app![alt text](img/app.jpeg "Logo Title Text 1")
 
 # Contributors
 - Andreas Regli - aregli@student.ethz.ch
