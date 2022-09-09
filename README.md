@@ -62,6 +62,17 @@ Then the data simulation would last for 1000 secends. We open another terminal t
 
 `bokeh serve --show draw_map.py`
 
+### Client app
+[Not production ready - in development]
+```
+cd app/bloomair
+npm install
+npm run web
+```
+You should see a QR code in the terminal. Install the [ExpoGo](https://expo.dev/client) on iOS/Android and scan the QR code to run the development app.
+
+### AWS Resources
+We used IoT Core to create publish MQTT messages from the raspberry pi. We create IoT Rules to route the messages as metrics to CloudWatch, save them to DynamoDB. CloudWatch Alarms are created on these metrci with a SNS notification with email subscription.
 ## Demo
 
 Alive plant (acceptable air quality)![alt text](img/alive.jpeg "Logo Title Text 1")
