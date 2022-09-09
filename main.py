@@ -4,15 +4,13 @@ from thingspeak.api import send_data
 from aws.iot import IOT
 import json
 
-GPIO_DHT = 4
+GPIO_DHT = 26
 
-GPIO_MOTOR_2 = 22
-GPIO_MOTOR_1 = 27
+GPIO_MOTOR = 13
 
-SAMPLE_PERIOD = 2  # seconds
-PUBLISH_PERIOD = 10 # seconds
+PUBLISH_PERIOD = 2  # seconds
 
-TEMP_THRESH = 26  # deg C
+TEMP_THRESH = 30  # deg C
 HUMI_THRESH = 65  # %
 
 
@@ -22,22 +20,14 @@ class BloomAir:
         self.ALIVE, self.DEAD = True, False
 
         self.sensor = Sensor({"dht": GPIO_DHT})
-        self.motor = Motor([GPIO_MOTOR_1, GPIO_MOTOR_2])
+        self.motor = Motor(GPIO_MOTOR)
         self.IOT = IOT()
-        self.reset()
-
-    def reset(self):
-        self.status = self.ALIVE
-        self.motor.backward(1) # reset flower position
+        self.live()
 
     def run(self):
-        loop = True
-        i = 0
-        publish_iter = PUBLISH_PERIOD // SAMPLE_PERIOD
+        loop, i = True, 0
         while loop:
-            print('here', i)
             out = self.sensor.read()
-            print('out',out)
             temp, humi = out['temp_c'], out['humidity']
 
             print("Temperature: {} °C, humidity: {} %".format(temp, humi))
@@ -47,22 +37,25 @@ class BloomAir:
             else:
                 if self.status is self.DEAD:
                     self.live()
-            print(i,temp,humi)
-            if i == 0:
+
+            if i >= 5:
                 send_data(temp, humi)
-                self.IOT.publish(json.dumps({"temperature": temp, "humidity": humi}))
-            i = (i+1) % publish_iter
-            time.sleep(SAMPLE_PERIOD)
+                self.IOT.publish(json.dumps(
+                    {"temperature": temp, "humidity": humi}))
+                i = 0
+            else:
+                i += 1
+            time.sleep(PUBLISH_PERIOD)
 
     def die(self):
         print("I'm dying")
         self.status = self.DEAD
-        self.motor.forward(1)
+        self.motor.down()
 
     def live(self):
         print("I'm alive")
         self.status = self.ALIVE
-        self.motor.backward(1)
+        self.motor.up()
 
 
 if __name__ == "__main__":

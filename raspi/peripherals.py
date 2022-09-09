@@ -1,6 +1,6 @@
 from pigpio_dht import DHT22
-import RPi.GPIO as GPIO
 import time
+import pigpio
 
 
 class Sensor:
@@ -21,33 +21,20 @@ class Sensor:
 
 
 class Motor:
-    def __init__(self, gpios):
-        self.FORWARD, self.BACKWARD = 0, 1
+    def __init__(self, gpio):
+        self.gpio = gpio
 
-        self.pwms = []
+        pwm = pigpio.pi()
+        pwm.set_mode(gpio, pigpio.OUTPUT)
 
-        GPIO.setmode(GPIO.BCM)
-        for gpio in gpios:
-            GPIO.setup(gpio, GPIO.OUT)
-            pwm = GPIO.PWM(gpio, 50)
-            pwm.start(0.0)
-            self.pwms.append(pwm)
+        pwm.set_PWM_frequency(gpio, 50)
+        pwm.set_servo_pulsewidth(gpio, 500)
+        self.pwm = pwm
 
-        self.stop()
+        self.up()
 
-    def stop(self):
-        for pwm in self.pwms:
-            pwm.ChangeDutyCycle(0.0)
+    def up(self):
+        self.pwm.set_servo_pulsewidth(self.gpio, 500)
 
-    def move(self, direction, speed, duration):
-        self.pwms[direction].ChangeDutyCycle(speed)
-
-        if duration is not None:
-            time.sleep(duration)
-            self.stop()
-
-    def forward(self, speed=100.0, duration=None):
-        self.move(self.FORWARD, speed, duration)
-
-    def backward(self, speed=100.0, duration=None):
-        self.move(self.BACKWARD, speed, duration)
+    def down(self):
+        self.pwm.set_servo_pulsewidth(self.gpio, 2300)
